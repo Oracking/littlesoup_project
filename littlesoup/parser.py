@@ -1,9 +1,14 @@
 '''
-Moduling for parsing html
+Module for parsing html. To familiarize yourself with the module, read the
+README.md file
 '''
 import re
 
 class BaseNavigableItem():
+    '''
+    This is the base class for a navigable item that will be extended by the
+    LittleElement class and the LittleSoup class
+    '''
 
     ATTRIBUTE_REGEX = r'(?P<attribute_name>[\w"\'-]+)(' + \
                       r'\s*=\s*"(?P<val_opt1>[^"]*)"|' + \
@@ -58,7 +63,8 @@ class BaseNavigableItem():
                  exact_class=False, bfs=False, string=None,
                  string_contains=None, find_first=False):
         '''
-        Used to find all tags in within a node that matches ....
+        Used to find all tags in within a node that matches the parameters
+        specified
         '''
         if attribute_dict:
             assert isinstance(attribute_dict, dict), f"Expected "\
@@ -181,10 +187,9 @@ class LittleString(str):
         self.parent = parent_tag
 
 
-class LittleTag(BaseNavigableItem):
+class LittleElement(BaseNavigableItem):
     '''
-    Class to handle tag objects which will also be extended by LittleSoup
-    class
+    Class to handle html elements
     '''
     def __init__(self, o_re_tag_obj, parser):
         self.o_re_tag_obj = o_re_tag_obj
@@ -322,7 +327,7 @@ class LittleSoup(BaseNavigableItem):
         for re_tag_obj in re_tag_objs:
             # This block deals with an instance of an opening tag
             if re_tag_obj.group('opening_tag'):
-                o_little_tag = LittleTag(re_tag_obj, parser=self)
+                o_little_tag = LittleElement(re_tag_obj, parser=self)
                 if o_little_tag.tag_name.lower() in self.HTML_SINGLETONS or \
                     re_tag_obj.group('self_closing'):
                     if opened_tags:
@@ -334,13 +339,12 @@ class LittleSoup(BaseNavigableItem):
 
             # This block deals with an instance of a closing tag
             elif re_tag_obj.group('closing_tag'):
-                # Began to change things
                 i = -1 # Start from the back
                 negative_len = -len(opened_tags) - 1
                 try:
                     last_tag = opened_tags[-1]
                 except IndexError:
-                    # Just pass. If there is no last_tag then the while loop
+                    # If there is no last_tag then the while loop
                     # below won't run cause i will be less than 0
                     last_tag = None
                 while i > negative_len:
@@ -397,7 +401,7 @@ class LittleSoup(BaseNavigableItem):
     def _recursively_force_close(self, unclosed_tags, c_re_tag_obj=None,
                                  raw_position=None):
         '''
-        Method force closes all but the first element
+        Method force closes elements that were not properly closed
         '''
         for j in range(-1, -len(unclosed_tags), -1):
             if c_re_tag_obj:

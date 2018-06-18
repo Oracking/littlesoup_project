@@ -1,16 +1,19 @@
-This file will indicate some differences between LittleSoup and
-BeautifulSoup in terms of their usage.
+# Documentation
 
-## Importing
+This readme serves as a simple how-to guide for this package. For those that are already familiar to Beautiful Soup, it will also highlight areas where this package differs from Beautiful Soup.
+
+# Importing into your code
+
+To use this package in your code, simply clone this repository and copy the littlesoup folder/package into your project folder. You can then use it like so:
+
 ```
->>> from bs4 import BeautifulSoup
 >>> from littlesoup import LittleSoup
 
 ```
 ## Creating a soup from a string of HTML content
-Beautifulsoup requires you to specify the parser you want to use. LittleSoup
+Beautifulsoup requires you to specify the parser you want to use. LittleSoup,
 on the other hand, uses just one parser, hence does not require any
-other parameter except your string.
+other parameter except your string of html content.
 
 ```
 >>> htmlcontent = '<html>.........................</html>'
@@ -24,7 +27,7 @@ Normally, you will be working with libraries such as requests library, to
 get pages, and parse them using your html parser. These libraries get
 information in bytes. LittleSoup does not have methods for guessing the
 encoding of byte content. However, libraries such as the requests library
-do that for us, so we just have to pass in the encoding as an extra
+do that for us. Therefore, we just have to pass in the encoding as an extra
 parameter.
 
 ```
@@ -34,8 +37,8 @@ parameter.
 
 ```
 
-## Navigating a soup using attributes
-Naturally, you can navigate a soup in bs4 using the '.' method like so:
+## Navigating a soup using the dot method
+Naturally, you can navigate a soup in bs4 using the dot ('.') method like so:
 
 ```
 >>> bsoup.body.div.p
@@ -169,4 +172,21 @@ This means you can access their parents
 ```
 >>> string = lsoup.body.div.div__3.string
 >>> div__3 = string.parent
+
+```
+
+# Accessing attributes of tags
+
+You can access the attributes of tags by subscripting the class like so:
+
+```
+>>> a = soup.find('a')
+>>> link = a_tag['href']
+```
+
+You can access all attributes of a tag using the attrs property like so:
+
+```
+>>> img = soup.find('img')
+>>> attributes = img.attrs
 ```

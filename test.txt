@@ -1,5 +1,0 @@
-<select name="side_mp" onchange="document.forms[0].submit();" required>
-<option value=254 memory="Some Mixed Case">Fall Session</option>
-<option value=257 selected="">Spring Session</option>
-<option value=260>Summer Semester</option>
-</select>
