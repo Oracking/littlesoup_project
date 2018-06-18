@@ -2,7 +2,7 @@
 
 This readme serves as a simple how-to guide for this package. For those that are already familiar to Beautiful Soup, it will also highlight areas where this package differs from Beautiful Soup.
 
-# Importing into your code
+## Importing into your code
 
 To use this package in your code, simply clone this repository and copy the littlesoup folder/package into your project folder. You can then use it like so:
 
