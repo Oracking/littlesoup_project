@@ -1,4 +1,4 @@
-# Little Soup Project
+# LittleSoup Project
 
 ### About
 This project is aimed at creating a light-weight clone of the Beautiful Soup library. The littlesoup package parses html similar to Beautiful Soup's 'html.parser' with the added benefit of being smaller and faster.
